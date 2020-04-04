@@ -14,10 +14,18 @@
 
   - handlePinMode calls Firmata::setPinMode
 
-  Last updated October 16th, 2016
+  Last updated March 16th, 2020
 */
 
 #include "SerialFirmata.h"
+
+// The RX and TX hardware FIFOs of the ESP8266 hold 128 bytes that can be 
+// extended using interrupt handlers. The Arduino constants are not available
+// for the ESP8266 platform.
+#if !defined(SERIAL_RX_BUFFER_SIZE) && defined(UART_TX_FIFO_SIZE)
+#define SERIAL_RX_BUFFER_SIZE UART_TX_FIFO_SIZE
+#endif
+
 
 SerialFirmata::SerialFirmata()
 {
